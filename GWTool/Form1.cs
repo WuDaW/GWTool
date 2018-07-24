@@ -195,16 +195,65 @@ namespace GWTool
             ws.TypeParagraph();
             ws.TypeParagraph();
             ws.Font.Size = 14;
-            ws.Paragraphs[1].Borders[Word.WdBorderType.wdBorderTop].LineStyle = Word.WdLineStyle.wdLineStyleSingle;
-            ws.Paragraphs[1].Borders[Word.WdBorderType.wdBorderTop].LineWidth = Word.WdLineWidth.wdLineWidth100pt;
-            ws.Paragraphs[1].Borders[Word.WdBorderType.wdBorderBottom].LineStyle = Word.WdLineStyle.wdLineStyleSingle;
-            ws.Paragraphs[1].Borders[Word.WdBorderType.wdBorderBottom].LineWidth = Word.WdLineWidth.wdLineWidth100pt;
-            ws.TypeText("抄送：" + textBox1.Text + "      （共印" + textBox3.Text + "份）\r\n");
-            object count = 14;
-            object WdLine = Word.WdUnits.wdLine;//换一行;
-            ws.MoveDown(ref WdLine, ref count, ref Nothing);
-            ws.Paragraphs[1].Borders[Word.WdBorderType.wdBorderTop].LineStyle = Word.WdLineStyle.wdLineStyleSingle;
-            ws.Paragraphs[1].Borders[Word.WdBorderType.wdBorderTop].LineWidth = Word.WdLineWidth.wdLineWidth100pt;
+            ws.Font.Name = "仿宋";
+            ws.ParagraphFormat.CharacterUnitFirstLineIndent = 0;
+            ws.TypeText("抄送：" + textBox1.Text + ChaoSong_Space("抄送：" + textBox1.Text + "（共印" + textBox3.Text + "份）") + "（共印" + textBox3.Text + "份）");
+            ws.TypeParagraph();
+            //计算承办信息第二行空格数
+            string cSqace = ChengBan_Space("承办单位：" + comboBox5.Text + "承办人：" + textBox4.Text + "电话：" + textBox5.Text);
+            ws.TypeText("承办单位：" + comboBox5.Text + cSqace + "承办人：" + textBox4.Text + cSqace + "电话：" + textBox5.Text);
+            ws.TypeParagraph();
+            ws.TypeText(label12.Text + YinFa_Space(label12.Text + dateTimePicker2.Text + label13.Text) + dateTimePicker2.Text + label13.Text);
+            Word.Document ad = wordApp.ActiveDocument;
+            int p = ad.Paragraphs.Count;
+            ad.Paragraphs[p - 2].Borders[Word.WdBorderType.wdBorderTop].LineStyle = Word.WdLineStyle.wdLineStyleSingle;
+            ad.Paragraphs[p - 2].Borders[Word.WdBorderType.wdBorderTop].LineWidth = Word.WdLineWidth.wdLineWidth100pt;
+            ad.Paragraphs[p - 1].Borders[Word.WdBorderType.wdBorderTop].LineStyle = Word.WdLineStyle.wdLineStyleSingle;
+            ad.Paragraphs[p - 1].Borders[Word.WdBorderType.wdBorderTop].LineWidth = Word.WdLineWidth.wdLineWidth075pt;
+            ad.Paragraphs[p - 1].Borders[Word.WdBorderType.wdBorderBottom].LineStyle = Word.WdLineStyle.wdLineStyleSingle;
+            ad.Paragraphs[p - 1].Borders[Word.WdBorderType.wdBorderBottom].LineWidth = Word.WdLineWidth.wdLineWidth075pt;
+            ad.Paragraphs[p].Borders[Word.WdBorderType.wdBorderBottom].LineStyle = Word.WdLineStyle.wdLineStyleSingle;
+            ad.Paragraphs[p].Borders[Word.WdBorderType.wdBorderBottom].LineWidth = Word.WdLineWidth.wdLineWidth100pt;
+        }
+
+        private string ChaoSong_Space(string str)
+        {
+            string restr = "";
+            if (str.Length < 46)
+            {
+                for (int i = 0; i < 46 - str.Length; i++)
+                {
+                    restr += " ";
+                }
+            }
+            return restr;
+        }
+
+        private string ChengBan_Space(string str)
+        {
+            string restr = "";
+            if (str.Length < 46)
+            {
+                for (int i = 0; i < (46 - str.Length) / 2; i++)
+                {
+                    restr += " ";
+                }
+            }
+            return restr;
+        }
+
+        private string YinFa_Space(string str)
+        {
+            //MessageBox.Show(str + "\n" + str.Length.ToString(), "输出");
+            string restr = "";
+            if (str.Length < 43)
+            {
+                for (int i = 0; i < 43 - str.Length; i++)
+                {
+                    restr += " ";
+                }
+            }
+            return restr;
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
