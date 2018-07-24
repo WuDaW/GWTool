@@ -105,6 +105,9 @@ namespace GWTool
             ws.TypeText(comboBox4.Text + "〔" + dateTimePicker1.Text + "〕" + textBox2.Text + "号");
         }
 
+        /**
+         * 设置通知正文格式
+         * */
         private void TongZhiZhengwen(Word.Application wordApp)
         {
             ResetGuangBiao(wordApp);
@@ -134,6 +137,23 @@ namespace GWTool
             ws.GoTo(ref what, ref which, ref count, ref dummy);
         }
 
+        private void GotoLastLine(Word.Application wordApp)
+        {
+            object dummy = System.Reflection.Missing.Value;
+            object what = Word.WdGoToItem.wdGoToLine;
+            object which = Word.WdGoToDirection.wdGoToLast;
+            object count = 99999999;
+            wordApp.Selection.GoTo(ref what, ref which, ref count, ref dummy);
+        }
+
+        public void GotoLastCharacter(Word.Selection selection)
+        {
+            object dummy = System.Reflection.Missing.Value;
+            object count = 99999999;
+            object Unit = Word.WdUnits.wdCharacter;
+            selection.MoveRight(ref Unit, ref count, ref dummy);
+        }
+
         private void TongZhi()
         {
             Word.Application wordApp = Globals.ThisAddIn.Application;
@@ -149,6 +169,7 @@ namespace GWTool
             ws.TypeParagraph();
             ResetGuangBiao(wordApp);
             TongZhiTou(wordApp);
+            Chengban_Tongzhi(wordApp);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -164,6 +185,34 @@ namespace GWTool
             wordApp.ActiveDocument.PageSetup.BottomMargin = wordApp.CentimetersToPoints(float.Parse("3.5"));
             wordApp.ActiveDocument.PageSetup.LeftMargin = wordApp.CentimetersToPoints(float.Parse("2.8"));
             wordApp.ActiveDocument.PageSetup.RightMargin = wordApp.CentimetersToPoints(float.Parse("2.6"));
+        }
+
+        private void Chengban_Tongzhi(Word.Application wordApp)
+        {
+            GotoLastLine(wordApp);
+            Word.Selection ws = wordApp.Selection;
+            GotoLastCharacter(ws);
+            ws.TypeParagraph();
+            ws.TypeParagraph();
+            ws.Font.Size = 14;
+            ws.Paragraphs[1].Borders[Word.WdBorderType.wdBorderTop].LineStyle = Word.WdLineStyle.wdLineStyleSingle;
+            ws.Paragraphs[1].Borders[Word.WdBorderType.wdBorderTop].LineWidth = Word.WdLineWidth.wdLineWidth100pt;
+            ws.Paragraphs[1].Borders[Word.WdBorderType.wdBorderBottom].LineStyle = Word.WdLineStyle.wdLineStyleSingle;
+            ws.Paragraphs[1].Borders[Word.WdBorderType.wdBorderBottom].LineWidth = Word.WdLineWidth.wdLineWidth100pt;
+            ws.TypeText("抄送：" + textBox1.Text + "      （共印" + textBox3.Text + "份）\r\n");
+            object count = 14;
+            object WdLine = Word.WdUnits.wdLine;//换一行;
+            ws.MoveDown(ref WdLine, ref count, ref Nothing);
+            ws.Paragraphs[1].Borders[Word.WdBorderType.wdBorderTop].LineStyle = Word.WdLineStyle.wdLineStyleSingle;
+            ws.Paragraphs[1].Borders[Word.WdBorderType.wdBorderTop].LineWidth = Word.WdLineWidth.wdLineWidth100pt;
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked)
+                radioButton2.Checked = false;
+            else
+                radioButton2.Checked = true;
         }
     }
 }
