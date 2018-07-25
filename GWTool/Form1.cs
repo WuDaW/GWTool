@@ -204,6 +204,8 @@ namespace GWTool
             ws.TypeText("承办单位：" + comboBox5.Text + cSqace + "承办人：" + textBox4.Text + cSqace + "电话：" + textBox5.Text);
             ws.TypeParagraph();
             ws.TypeText(label12.Text + YinFa_Space(label12.Text + dateTimePicker2.Text + label13.Text) + dateTimePicker2.Text + label13.Text);
+
+            //给承办信息部分划线
             Word.Document ad = wordApp.ActiveDocument;
             int p = ad.Paragraphs.Count;
             ad.Paragraphs[p - 2].Borders[Word.WdBorderType.wdBorderTop].LineStyle = Word.WdLineStyle.wdLineStyleSingle;
