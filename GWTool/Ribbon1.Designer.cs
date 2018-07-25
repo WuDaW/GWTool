@@ -36,25 +36,30 @@
         {
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group1 = this.Factory.CreateRibbonGroup();
-            this.group2 = this.Factory.CreateRibbonGroup();
-            this.button1 = this.Factory.CreateRibbonButton();
-            this.button2 = this.Factory.CreateRibbonButton();
-            this.button3 = this.Factory.CreateRibbonButton();
-            this.button4 = this.Factory.CreateRibbonButton();
-            this.button5 = this.Factory.CreateRibbonButton();
-            this.button6 = this.Factory.CreateRibbonButton();
             this.button7 = this.Factory.CreateRibbonButton();
             this.button8 = this.Factory.CreateRibbonButton();
             this.button9 = this.Factory.CreateRibbonButton();
+            this.group2 = this.Factory.CreateRibbonGroup();
+            this.button1 = this.Factory.CreateRibbonButton();
+            this.button6 = this.Factory.CreateRibbonButton();
+            this.button5 = this.Factory.CreateRibbonButton();
+            this.button4 = this.Factory.CreateRibbonButton();
+            this.button3 = this.Factory.CreateRibbonButton();
+            this.button2 = this.Factory.CreateRibbonButton();
+            this.group3 = this.Factory.CreateRibbonGroup();
+            this.button10 = this.Factory.CreateRibbonButton();
+            this.button11 = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group1.SuspendLayout();
             this.group2.SuspendLayout();
+            this.group3.SuspendLayout();
             // 
             // tab1
             // 
             this.tab1.ControlId.ControlIdType = Microsoft.Office.Tools.Ribbon.RibbonControlIdType.Office;
             this.tab1.Groups.Add(this.group1);
             this.tab1.Groups.Add(this.group2);
+            this.tab1.Groups.Add(this.group3);
             this.tab1.Label = "公文工具";
             this.tab1.Name = "tab1";
             // 
@@ -65,6 +70,24 @@
             this.group1.Items.Add(this.button9);
             this.group1.Label = "上行公文";
             this.group1.Name = "group1";
+            // 
+            // button7
+            // 
+            this.button7.Label = "呈 批 件";
+            this.button7.Name = "button7";
+            this.button7.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button7_Click);
+            // 
+            // button8
+            // 
+            this.button8.Label = "请    示";
+            this.button8.Name = "button8";
+            this.button8.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button8_Click);
+            // 
+            // button9
+            // 
+            this.button9.Label = "上报公文";
+            this.button9.Name = "button9";
+            this.button9.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button9_Click);
             // 
             // group2
             // 
@@ -83,15 +106,15 @@
             this.button1.Name = "button1";
             this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click);
             // 
-            // button2
+            // button6
             // 
-            this.button2.Label = "其  它";
-            this.button2.Name = "button2";
+            this.button6.Label = "通  报";
+            this.button6.Name = "button6";
             // 
-            // button3
+            // button5
             // 
-            this.button3.Label = "纪  要";
-            this.button3.Name = "button3";
+            this.button5.Label = "命  令";
+            this.button5.Name = "button5";
             // 
             // button4
             // 
@@ -99,33 +122,32 @@
             this.button4.Name = "button4";
             this.button4.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button4_Click);
             // 
-            // button5
+            // button3
             // 
-            this.button5.Label = "命  令";
-            this.button5.Name = "button5";
+            this.button3.Label = "纪  要";
+            this.button3.Name = "button3";
             // 
-            // button6
+            // button2
             // 
-            this.button6.Label = "通  报";
-            this.button6.Name = "button6";
+            this.button2.Label = "其  它";
+            this.button2.Name = "button2";
             // 
-            // button7
+            // group3
             // 
-            this.button7.Label = "呈批件";
-            this.button7.Name = "button7";
-            this.button7.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button7_Click);
+            this.group3.Items.Add(this.button10);
+            this.group3.Items.Add(this.button11);
+            this.group3.Label = "预案维护";
+            this.group3.Name = "group3";
             // 
-            // button8
+            // button10
             // 
-            this.button8.Label = "请  示";
-            this.button8.Name = "button8";
-            this.button8.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button8_Click);
+            this.button10.Label = "基本设置";
+            this.button10.Name = "button10";
             // 
-            // button9
+            // button11
             // 
-            this.button9.Label = "上报公文";
-            this.button9.Name = "button9";
-            this.button9.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button9_Click);
+            this.button11.Label = "预案维护";
+            this.button11.Name = "button11";
             // 
             // Ribbon1
             // 
@@ -139,6 +161,8 @@
             this.group1.PerformLayout();
             this.group2.ResumeLayout(false);
             this.group2.PerformLayout();
+            this.group3.ResumeLayout(false);
+            this.group3.PerformLayout();
 
         }
 
@@ -156,6 +180,9 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button2;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button8;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button9;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group3;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button10;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button11;
     }
 
     partial class ThisRibbonCollection
