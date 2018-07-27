@@ -42,5 +42,11 @@ namespace GWTool
             Form1 f1 = new Form1("上报公文");
             f1.Show();
         }
+
+        private void button10_Click(object sender, RibbonControlEventArgs e)
+        {
+            Form_setup fs = new Form_setup();
+            fs.Show();
+        }
     }
 }

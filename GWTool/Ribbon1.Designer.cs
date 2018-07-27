@@ -143,6 +143,7 @@
             // 
             this.button10.Label = "基本设置";
             this.button10.Name = "button10";
+            this.button10.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button10_Click);
             // 
             // button11
             // 
