@@ -93,9 +93,11 @@
             this.button2.TabIndex = 2;
             this.button2.Text = "取  消";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
+            this.button3.Enabled = false;
             this.button3.Location = new System.Drawing.Point(683, 494);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);

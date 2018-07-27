@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<basc>
+  <!--发文单位数据-->
+  <fwdw>
+    <fdw ID="1">空军地面防空训练基地</fdw>
+  </fwdw>
+
+  <!--发文字号数据-->
+  <fwzh></fwzh>
+
+  <!--承办单位数据-->
+  <cbdw></cbdw>
+</basc>
