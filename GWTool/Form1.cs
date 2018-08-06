@@ -20,9 +20,13 @@ namespace GWTool
         {
             zhonglei = action;
             InitializeComponent();
-            if (action == "呈批件" || action == "请示" || action == "上报公文")
+            if (action == "请示" || action == "上报公文")
             {
                 ShangXingWenLayout();
+            }
+            else if (action == "呈批件")
+            {
+                ChengPiLayout();
             }
         }
 
@@ -36,6 +40,39 @@ namespace GWTool
             
         }
 
+        /**
+         * 呈批件的显示
+         * 
+         * */
+        private void ChengPiLayout()
+        {
+            lable_qf.Location = new Point(510, 134);
+            lable_qf.AutoSize = true;
+            lable_qf.Text = "签发";
+            textbox_qf.Location = new Point(400, 129);
+            groupBox1.Controls.Add(lable_qf);
+            groupBox1.Controls.Add(textbox_qf);
+            comboBox4.Visible = false;
+            dateTimePicker1.Location = new Point(8,129);
+            textBox2.Location = new Point(58, 129);
+            label5.Location = new Point(112,135);
+            lineShape1.Visible = false;
+            lineShape4.Visible = false;
+            label6.Visible = false;
+            label7.Visible = false;
+            label8.Visible = false;
+            label13.Visible = false;
+            dateTimePicker2.Visible = false;
+            label12.Visible = false;
+            textBox1.Visible = false;
+            textBox3.Visible = false;
+            button3.Visible = false;
+        }
+
+        /**
+         * 上行公文的一般显示
+         * 
+         * */
         private void ShangXingWenLayout()
         {
             lable_qf.Location = new Point(400, 134);
@@ -46,6 +83,62 @@ namespace GWTool
             groupBox1.Controls.Add(textbox_qf);
         }
 
+        private void ChengPiJianTou(Word.Application wordApp)
+        {
+            wordApp = Globals.ThisAddIn.Application;
+            Word.Selection ws = wordApp.Selection;
+            ws.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
+            ws.Font.Size = 16;
+            ws.Font.Name = "黑体";
+            ws.TypeText("01\r\n");
+            ws.TypeText(comboBox1.Text + "\r\n");
+            ws.TypeText(comboBox2.Text + "\r\n");
+            ws.TypeParagraph();
+            ws.TypeParagraph();
+            ws.TypeParagraph();
+            ws.TypeParagraph();
+            ws.Font.Name = "宋体";
+            ws.Font.Size = 22;
+            ws.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+            ws.Font.ColorIndex = Word.WdColorIndex.wdRed;
+            ws.TypeText(comboBox_fwdw.Text + "呈批件");
+            ws.Font.Size = 16;
+            ws.Font.ColorIndex = Word.WdColorIndex.wdBlack;
+            ws.Font.Name = "仿宋";
+            ws.TypeParagraph();
+            ws.TypeParagraph();
+            ws.Paragraphs[1].Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+            ws.Paragraphs[1].Borders.OutsideLineWidth = Word.WdLineWidth.wdLineWidth150pt;
+            ws.Paragraphs[1].Borders.OutsideColor = Word.WdColor.wdColorRed;
+            ws.Paragraphs[1].Borders[Word.WdBorderType.wdBorderLeft].LineStyle = Word.WdLineStyle.wdLineStyleNone;
+            ws.Paragraphs[1].Borders[Word.WdBorderType.wdBorderRight].LineStyle = Word.WdLineStyle.wdLineStyleNone;
+            ws.Paragraphs[1].Borders[Word.WdBorderType.wdBorderTop].LineStyle = Word.WdLineStyle.wdLineStyleNone;
+            ws.Font.Name = "仿宋";
+            ws.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
+            ws.TypeText("〔" + dateTimePicker1.Text + "〕" + textBox2.Text + "号                            " + textbox_qf.Text + "  签发");
+        }
+
+        private void Chengban_ChengPiJian(Word.Application wordApp)
+        {
+            GotoLastLine(wordApp);
+            Word.Selection ws = wordApp.Selection;
+            GotoLastCharacter(ws);
+            ws.TypeParagraph();
+            ws.TypeParagraph();
+            ws.Font.Size = 14;
+            ws.Font.Name = "仿宋";
+            ws.ParagraphFormat.CharacterUnitFirstLineIndent = 0;
+            //计算承办信息第二行空格数
+            string cSqace = ChengBan_Space("承办单位：" + comboBox5.Text + "承办人：" + textBox4.Text + "电话：" + textBox5.Text);
+            ws.TypeText("承办单位：" + comboBox5.Text + cSqace + "承办人：" + textBox4.Text + cSqace + "电话：" + textBox5.Text);
+            Word.Document ad = wordApp.ActiveDocument;
+            int p = ad.Paragraphs.Count;
+            ad.Paragraphs[p].Borders[Word.WdBorderType.wdBorderBottom].LineStyle = Word.WdLineStyle.wdLineStyleSingle;
+            ad.Paragraphs[p].Borders[Word.WdBorderType.wdBorderBottom].LineWidth = Word.WdLineWidth.wdLineWidth100pt;
+            ad.Paragraphs[p].Borders[Word.WdBorderType.wdBorderTop].LineStyle = Word.WdLineStyle.wdLineStyleSingle;
+            ad.Paragraphs[p].Borders[Word.WdBorderType.wdBorderTop].LineWidth = Word.WdLineWidth.wdLineWidth100pt;
+        }
+        
         private void button2_Click(object sender, EventArgs e)
         {
             Close();
@@ -174,8 +267,38 @@ namespace GWTool
 
         private void button1_Click(object sender, EventArgs e)
         {
-            TongZhi();
+            switch (zhonglei)
+            {
+                case "通知":
+                    TongZhi();
+                    break;
+
+                case "呈批件":
+                    ChengPiJian();
+                    break;
+
+                default:
+                    break;
+            }
             Close();
+        }
+
+        private void ChengPiJian()
+        {
+            Word.Application wordApp = Globals.ThisAddIn.Application;
+            Word.Selection ws = wordApp.Selection;
+            //if (!checkBox1.Checked)
+            //{
+            //    TongZhiZhengwen(wordApp);
+            //}
+            SetPageStyle(wordApp);
+            ResetGuangBiao(wordApp);
+            ws.Font.Size = 16;
+            ws.TypeParagraph();
+            ws.TypeParagraph();
+            ResetGuangBiao(wordApp);
+            ChengPiJianTou(wordApp);
+            Chengban_ChengPiJian(wordApp);
         }
 
         private void SetPageStyle(Word.Application wordApp)
